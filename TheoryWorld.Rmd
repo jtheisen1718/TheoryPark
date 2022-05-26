@@ -9,7 +9,7 @@ If the graph is too difficult to see, uncomment the ggsave parameter and change 
 ```{r}
 #install.packages('ggplot2')
 library(ggplot2)
-path = "./all_inputs/admin_medium3.in"
+path = "./all_inputs/Àquatremains_medium1.in"
 attractions = read.csv(path,head=FALSE,sep=' ')
 ```
 
@@ -25,7 +25,7 @@ attractions$hours = attractions$close-attractions$open
 g = ggplot(data=attractions, aes(open,index, label = utility)) +
   geom_text(size=3,nudge_x=-30) +
   geom_linerange(aes(xmin=open,xmax=close),size=5) + 
-  geom_linerange(aes(xmin=open,xmax=open+time),size=2,color='#800000') +
+  geom_linerange(aes(xmin=open,xmax=open+time),size=2,color='#FF0000') +
   xlab('time') + geom_vline(xintercept=1440) + theme_bw()
 
 #aspect_ratio = 1.5
