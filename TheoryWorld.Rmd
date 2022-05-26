@@ -1,0 +1,34 @@
+---
+title: "Schedule Visualizer"
+output: html_notebook
+---
+The number labels indicate utiilty, the red bars indicate time spent, the black bars represent open hours.
+If you haven't used ggplot2 before, uncomment line 10 the first time you run it. Replace the path variable with the path to your size#.in file
+If the graph is too difficult to see, uncomment the ggsave parameter and change the height until the saved photo is readable.
+
+```{r}
+#install.packages('ggplot2')
+library(ggplot2)
+path = "./all_inputs/admin_medium3.in"
+attractions = read.csv(path,head=FALSE,sep=' ')
+```
+
+```{r}
+attractions = attractions[-1,]
+rownames(attractions) = NULL
+colnames(attractions) = c('x','y','open','close','utility','time')
+
+attractions$index = 1:nrow(attractions)
+attractions$hours = attractions$close-attractions$open
+
+
+g = ggplot(data=attractions, aes(open,index, label = utility)) +
+  geom_text(size=3,nudge_x=-30) +
+  geom_linerange(aes(xmin=open,xmax=close),size=5) + 
+  geom_linerange(aes(xmin=open,xmax=open+time),size=2,color='#800000') +
+  xlab('time') + geom_vline(xintercept=1440) + theme_bw()
+
+#aspect_ratio = 1.5
+#h = nrow(attractions)*0.2
+#ggsave("plot1.png", height = h, width = 12)
+```
